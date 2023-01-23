@@ -7,16 +7,16 @@ def q1():
     s, e, m = N_STR[:1], N_STR[1:12], N_STR[12:]
 
     s = (-1)**(int(s))  # Sign
-    e = int(e, 2)  # Exponent (of 2)
-    m = sum(int(m[i]) * 2**(-i) for i in range(len(m)))  # Mantissa
+    e = 2**(int(e, 2) - 1023)  # Exponent
+    m = 1 + sum(int(m[i]) * 2**(-(i+1)) for i in range(len(m)))  # Mantissa
 
-    return s * m * 2**(e - 1023)
+    return s * m * e
 
 
 # This function is utterly incomplete but it works
 # as long as you don't feed it a weird value for k
 def chop(n, k):
-    # Determine magnitude of n to restore after truncation
+    # Determine digit count of n to restore after truncation
     d = 0
     while abs(n) >= 1:
         d += 1
@@ -51,8 +51,8 @@ def q4():
     p_approx = q3()
     p = q1()
 
-    err_abs = abs(p - p_approx)
-    err_rel = abs(p - p_approx) / abs(p)
+    err_abs = abs(p - p_approx)  # Absolute error
+    err_rel = abs(p - p_approx) / abs(p)  # Relative error
 
     return err_abs, err_rel
 
@@ -106,6 +106,7 @@ def q6():
     def f(x):
         return ((x + 4) * x) * x - 10
 
+    # Derivative of f
     def df(x):
         return (3 * x + 8) * x
 
