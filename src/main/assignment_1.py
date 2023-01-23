@@ -64,10 +64,10 @@ def q5():
     tol = 10**-4
 
     k = 1
-    while summand(k) >= tol:
+    while summand(k) > tol:
         k += 1
 
-    return k + 1
+    return k
 
 
 def bisection(a, b, f, tol):
@@ -94,7 +94,6 @@ def newton(p, f, df, tol):
             p_next = p - f(p) / df(p)
 
             if abs(p_next - p) < tol:
-                print(p_next)
                 return i
 
             i += 1
