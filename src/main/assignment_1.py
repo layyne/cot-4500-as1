@@ -1,4 +1,5 @@
 import numpy as np
+from numpy.polynomial import Polynomial
 
 
 def q1():
@@ -103,12 +104,11 @@ def newton(p, f, df, tol):
 
 
 def q6():
-    def f(x):
-        return ((x + 4) * x) * x - 10
+    coef = [-10, 0, 4, 1]
 
-    # Derivative of f
-    def df(x):
-        return (3 * x + 8) * x
+    # f(x) and df(x)/dx
+    f: Polynomial = Polynomial(coef)
+    df: Polynomial = f.deriv()
 
     tol = 10**-4
 
