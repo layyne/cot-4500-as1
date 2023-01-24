@@ -121,9 +121,9 @@ def q6():
 
 
 if __name__ == '__main__':
-    print(q1(), end='\n\n')
-    print(q2(), end='\n\n')
-    print(q3(), end='\n\n')
+    print('%.5f' % q1(), end='\n\n')
+    print('%.5f' % q2(), end='\n\n')
+    print('%.5f' % q3(), end='\n\n')
     print(*q4(), sep='\n', end='\n\n')
     print(q5(), end='\n\n')
     print(*q6(), sep='\n')
