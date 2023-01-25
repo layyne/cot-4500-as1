@@ -68,12 +68,13 @@ def q5():
     while summand(k) > tol:
         k += 1
 
-    return k
+    # Partial sum up to a_{n-1} has error <= a_n
+    return k - 1
 
 
 def bisection(a, b, f, tol):
     def same_sign(a, b):
-        return a * b >= 0
+        return a * b > 0
 
     i = 0
     while abs(b - a) > tol:
