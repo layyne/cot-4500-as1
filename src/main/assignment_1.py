@@ -18,7 +18,7 @@ def q1():
 
 # This function is utterly incomplete but it works
 # as long as you don't feed it a weird value for k
-def chop(n, k):
+def chop(n: float, k: int):
     # Determine digit count of n to restore after truncation
     d = 0
     while abs(n) >= 1:
@@ -35,7 +35,7 @@ def q2():
 
 
 # This one sucks too for the same reasons
-def round(n, k):
+def round(n: float, k: int):
     d = 0
     while n >= 1:
         d += 1
@@ -82,7 +82,7 @@ def q5():
 
 # Returns the minimum number of steps it takes the root-finding bisection method
 # to find a root of f within a certain error (tol), starting with bounds a and b
-def bisection(a, b, f, tol):
+def bisection(a: float, b: float, f: Polynomial, tol: float):
     def same_sign(a, b):
         return a * b > 0
 
@@ -101,7 +101,7 @@ def bisection(a, b, f, tol):
 
 # Returns the minimum number of steps it takes Newton's root-finding method to
 # find a root of f within a certain error (tol), starting with initial guess p
-def newton(p, f, tol):
+def newton(p: float, f: Polynomial, tol: float):
     df = f.deriv()
     i = 0
     while True:
@@ -120,13 +120,10 @@ def newton(p, f, tol):
 # Question 6 (two answers)
 def q6():
     coef = [-10, 0, 4, 1]
-
-    # f(x) and df(x)/dx
-    f: Polynomial = Polynomial(coef)
-
-    tol = 10**-4
+    f = Polynomial(coef)
 
     a, b = -4, 7
+    tol = 10**-4
 
     bisect_iter = bisection(a, b, f, tol)
     newton_iter = newton(b, f, tol)
