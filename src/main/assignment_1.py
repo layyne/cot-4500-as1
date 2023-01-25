@@ -1,7 +1,9 @@
 import numpy as np
 from numpy.polynomial import Polynomial
+from decimal import Decimal
 
 
+# Question 1
 def q1():
     N_STR = '010000000111111010111001'
 
@@ -26,6 +28,7 @@ def chop(n, k):
     return np.trunc(n * 10**k) * 10**(d - k)
 
 
+# Question 2
 def q2():
     ans = q1()
     return chop(ans, 3)
@@ -43,22 +46,27 @@ def round(n, k):
     return np.trunc(n * 10**k + 0.5 + sigma) * 10**(d - k)
 
 
+# Question 3
 def q3():
     ans = q1()
     return round(ans, 3)
 
 
+# Question 4 (two answers)
 def q4():
-    p_approx = q3()
-    p = q1()
+    # I wasn't getting accurate results without using this class
+    p_approx = Decimal(q3())
+    p = Decimal(q1())
 
     err_abs = abs(p - p_approx)  # Absolute error
-    err_rel = abs(p - p_approx) / abs(p)  # Relative error
+    err_rel = err_abs / abs(p)  # Relative error
 
     return err_abs, err_rel
 
 
+# Question 5
 def q5():
+    # We can ignore the alternation, and x**k will always be 1
     def summand(k):
         return 1 / k**3
 
@@ -72,6 +80,8 @@ def q5():
     return k - 1
 
 
+# Returns the minimum number of steps it takes the root-finding bisection method
+# to find a root of f within a certain error (tol), starting with bounds a and b
 def bisection(a, b, f, tol):
     def same_sign(a, b):
         return a * b > 0
@@ -89,7 +99,10 @@ def bisection(a, b, f, tol):
     return i
 
 
-def newton(p, f, df, tol):
+# Returns the minimum number of steps it takes Newton's root-finding method to
+# find a root of f within a certain error (tol), starting with initial guess p
+def newton(p, f, tol):
+    df = f.deriv()
     i = 0
     while True:
         if df(p) == 0:
@@ -98,33 +111,40 @@ def newton(p, f, df, tol):
         p_next = p - f(p) / df(p)
 
         if abs(p_next - p) < tol:
-            return i
+            return i + 1
 
         i += 1
         p = p_next
 
 
+# Question 6 (two answers)
 def q6():
     coef = [-10, 0, 4, 1]
 
     # f(x) and df(x)/dx
     f: Polynomial = Polynomial(coef)
-    df: Polynomial = f.deriv()
 
     tol = 10**-4
 
     a, b = -4, 7
 
     bisect_iter = bisection(a, b, f, tol)
-    newton_iter = newton(b, f, df, tol)
+    newton_iter = newton(b, f, tol)
 
     return bisect_iter, newton_iter
 
 
 if __name__ == '__main__':
-    print('%.5f' % q1(), end='\n\n')
-    print('%.5f' % q2(), end='\n\n')
-    print('%.5f' % q3(), end='\n\n')
-    print(*q4(), sep='\n', end='\n\n')
+    print(q1(), end='\n\n')
+
+    print(q2(), end='\n\n')
+
+    print(q3(), end='\n\n')
+
+    err_abs, err_rel = q4()
+    print(err_abs)
+    print(f'{err_rel:.31f}', end='\n\n')
+
     print(q5(), end='\n\n')
-    print(*q6(), sep='\n')
+
+    print(*q6(), sep='\n\n')
