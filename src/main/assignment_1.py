@@ -92,16 +92,16 @@ def bisection(a, b, f, tol):
 def newton(p, f, df, tol):
     i = 0
     while True:
-        if df(p) != 0:
-            p_next = p - f(p) / df(p)
-
-            if abs(p_next - p) < tol:
-                return i
-
-            i += 1
-            p = p_next
-        else:
+        if df(p) == 0:
             return -1
+
+        p_next = p - f(p) / df(p)
+
+        if abs(p_next - p) < tol:
+            return i
+
+        i += 1
+        p = p_next
 
 
 def q6():
